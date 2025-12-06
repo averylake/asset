@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>04 // THE ASSET | The Digital Audit</title>
+    <meta name="description" content="Protocol 04: THE ASSET. A valuation audit by Avery Lake.">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="04 // THE ASSET">
+    <meta property="og:description" content="Protocol 04. The machine generates infinity. You generate the value.">
+    <meta property="og:image" content="https://asset.averylakeofficial.com/preview.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:image" content="https://asset.averylakeofficial.com/preview.jpg">
+    <meta property="og:url" content="https://asset.averylakeofficial.com/">
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%23ff66b2'/></svg>">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --void: #050505;
+            --pink: #ff66b2;
+            --accent-pink: #ff66b2;
+            --magenta: #ff00ff;
+            --text-main: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.4);
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --border-dim: rgba(255, 255, 255, 0.2);
+            --font-ui: 'Space Grotesk', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --font-slab: 'Roboto Condensed', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--void);
+            color: var(--text-main);
+            font-family: var(--font-ui);
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* UNIFIED CAPTURE MODAL */
+        .capture-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .capture-modal {
+            background: rgba(10, 10, 10, 0.95);
+            border: 1px solid var(--pink);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 50px rgba(255, 102, 178, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .terminal-input {
+            width: 220px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-label {
+            font-size: 9px;
+            opacity: 0.5;
+            margin-right: 8px;
+            font-weight: 400;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* TOP BAR (Unified) */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        .top-bar>* {
+            pointer-events: auto;
+        }
+
+        .protocol-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .protocol-subtitle {
+            font-size: 9px;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
+
+        header {
+            display: none;
+        }
+
+        .project-tag {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            font-weight: 400;
+        }
+
+        .subtitle {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--pink);
+        }
+
+        .audio-toggle {
+            font-family: var(--font-ui);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 1px solid var(--border-dim);
+            background: transparent;
+            color: var(--text-dim);
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .audio-toggle:hover {
+            border-color: var(--text-muted);
+            color: var(--text-muted);
+        }
+
+        .audio-toggle.active {
+            border-color: var(--pink);
+            color: var(--pink);
+        }
+
+        /* SCENE */
+        .scene {
+            position: relative;
+            aspect-ratio: 3.2 / 5.4;
+            height: 55vh;
+            max-height: 580px;
+            margin-top: 20px;
+            perspective: 1000px;
+            flex-shrink: 0;
+            z-index: 5;
+        }
+
+        .slab-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+            /* Responsive tilt */
+        }
+
+        .slab-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 8px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Gloss */
+        .slab-face::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0) 60%);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* LABEL */
+        .slab-label-area {
+            background: #f4f4f4;
+            width: 100%;
+            height: 22%;
+            border-radius: 6px 6px 0 0;
+            padding: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-slab);
+            color: #000;
+            position: relative;
+            margin-bottom: 8px;
+            z-index: 2;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .slab-label-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0, 0, 0, 0.03) 2px, rgba(0, 0, 0, 0.03) 4px);
+            pointer-events: none;
+        }
+
+        .label-text-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            width: 68%;
+            z-index: 2;
+        }
+
+        .label-line-1 {
+            font-size: 0.45rem;
+            text-transform: uppercase;
+            color: #555;
+            font-weight: 700;
+        }
+
+        .label-line-2 {
+            font-size: 0.7rem;
+            font-weight: 700;
+            line-height: 1;
+            margin: 2px 0;
+        }
+
+        .label-line-3 {
+            font-size: 0.5rem;
+            color: #333;
+        }
+
+        .label-line-4 {
+            font-size: 0.55rem;
+            font-weight: 700;
+        }
+
+        .label-line-7 {
+            font-size: 0.4rem;
+            font-family: var(--font-mono);
+            color: #666;
+            margin-top: auto;
+        }
+
+        .label-grade-col {
+            width: 30%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-left: 1px solid #ccc;
+            z-index: 2;
+        }
+
+        .grade-num {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #cc0000;
+            line-height: 0.9;
+        }
+
+        .grade-text {
+            font-size: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* CARD */
+        .card-well {
+            flex-grow: 1;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-container {
+            /* 2.5 x 3.5 Ratio */
+            aspect-ratio: 5 / 7;
+            height: 94%;
+            background: #111;
+            border-radius: 3px;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* HOLOGRAPHIC ANIMATION */
+        .holo-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(115deg, transparent 20%, rgba(0, 255, 255, 0.4) 40%, rgba(255, 0, 255, 0.4) 60%, transparent 80%);
+            background-size: 200% 200%;
+            mix-blend-mode: color-dodge;
+            opacity: 0.6;
+            pointer-events: none;
+            animation: holoSweep 3s linear infinite;
+        }
+
+        @keyframes holoSweep {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        /* CONTROLS */
+        .controls {
+            width: 90%;
+            max-width: 380px;
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 20;
+            flex-grow: 0;
+            padding-bottom: 20px;
+        }
+
+        .primary-btn {
+            background: var(--pink);
+            color: #000;
+            border: none;
+            padding: 16px 40px;
+            font-family: var(--font-ui);
+            font-weight: 700;
+            font-size: 11px;
+            cursor: pointer;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            width: auto;
+            align-self: center;
+        }
+
+        .primary-btn:active {
+            transform: scale(0.98);
+        }
+
+        .primary-btn:hover {
+            background: var(--pink);
+        }
+
+        .primary-btn:disabled {
+            background: #333;
+            color: #555;
+            cursor: wait;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            animation: slideUp 0.3s ease;
+        }
+
+        .terminal-input {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #444;
+            color: var(--pink);
+            padding: 12px;
+            font-family: var(--font-mono);
+            text-align: center;
+            text-transform: uppercase;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .terminal-input:focus {
+            border-color: var(--pink);
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            animation: slideUp 0.5s ease;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .secondary-btn {
+            background: transparent;
+            border: 1px solid #444;
+            color: #aaa;
+            padding: 12px 16px;
+            font-family: var(--font-ui);
+            font-size: 0.7rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            text-decoration: none;
+            text-align: left;
+            display: block;
+            width: 100%;
+        }
+
+        .secondary-btn:hover {
+            border-color: #fff;
+            color: #fff;
+        }
+
+        .secondary-btn.checked {
+            border-color: var(--pink);
+            color: var(--pink);
+            background: rgba(255, 102, 178, 0.05);
+        }
+
+        .locked-btn {
+            border-color: #333;
+            color: #444;
+            cursor: not-allowed;
+            pointer-events: none;
+            background: rgba(0, 0, 0, 0.5);
+            font-style: italic;
+        }
+
+        .unlocked-btn {
+            border-color: var(--pink);
+            color: var(--pink);
+            cursor: pointer;
+            pointer-events: auto;
+            font-style: normal;
+            background: rgba(255, 102, 178, 0.1);
+            font-weight: bold;
+        }
+
+        .restart-link {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #444;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .audio-credit {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .blink {
+            animation: blinker 1s infinite;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .browser-alert {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--void);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* UNIFIED CSS v2.0 */
+        #startOverlay {
+            position: fixed;
+            inset: 0;
+            background: var(--void);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .start-title {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .start-by {
+            font-size: 11px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 8px;
+        }
+
+        .start-artist {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 4px;
+            margin-bottom: 50px;
+        }
+
+        .btn-initialize {
+            background: transparent;
+            border: 1px solid var(--pink);
+            color: var(--pink);
+            font-family: var(--font-ui);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 18px 50px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+
+        .btn-initialize:hover {
+            background: rgba(255, 102, 178, 0.1);
+            box-shadow: 0 0 30px rgba(255, 102, 178, 0.3);
+        }
+
+        .sound-note {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+        }
+
+        .main-interface {
+            opacity: 0;
+            transition: opacity 1s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .main-interface.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="browserWarning" class="browser-alert hidden">
+        <p style="font-family: var(--font-mono); color: var(--magenta);">
+            ⚠️ <strong>RESTRICTED TERMINAL</strong><br><br>
+            The Market requires a clean signal.<br>
+            Please tap <strong>•••</strong> and select<br><strong>"Open in Browser"</strong>.
+        </p>
+    </div>
+
+    <audio id="bgAudio" loop>
+        <source src="Valuation.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- UNIFIED START OVERLAY -->
+    <!-- UNIFIED START OVERLAY -->
+    <div id="startOverlay">
+        <div class="start-title">THE ASSET</div>
+        <div class="start-by">by</div>
+        <div class="start-artist">AVERY LAKE</div>
+        <button class="btn-initialize" onclick="initializeProtocol()">INITIALIZE</button>
+        <div class="sound-note">(Turn on sound for full effect)</div>
+    </div>
+
+    <!-- MAIN INTERFACE WRAPPER -->
+    <div id="mainInterface" class="main-interface">
+
+        <!-- TOP BAR (Unified) -->
+        <div class="top-bar">
+            <div>
+                <div class="protocol-title">The Asset</div>
+                <div class="protocol-subtitle">Protocol 04</div>
+            </div>
+            <button id="audioToggle" class="audio-toggle">AUDIO: OFF</button>
+        </div>
+
+        <div class="scene">
+            <div class="slab-container" id="slab">
+                <div class="slab-face">
+                    <div class="slab-label-area">
+                        <div class="label-text-col">
+                            <div class="label-line-1" id="lbl-l1">2026 THE ART OF AVERY LAKE</div>
+                            <div class="label-line-2" id="lbl-l2">GEM MINT ABUNDANCE</div>
+                            <div class="label-line-3" id="lbl-l3">JJ EDITION</div>
+                            <div class="label-line-4" id="lbl-l4">#000</div>
+                            <div class="label-line-7" id="lbl-l7">--</div>
+                        </div>
+                        <div class="label-grade-col">
+                            <div class="grade-text" id="lbl-l5">STATUS</div>
+                            <div class="grade-num" id="lbl-l6" style="font-size: 1rem;">READY</div>
+                        </div>
+                    </div>
+                    <div class="card-well">
+                        <div class="card-container">
+                            <img id="resultImg" src="back.jpg" class="card-img">
+                            <div class="holo-overlay"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="spinBtn" class="primary-btn">SPIN THE WHEEL</button>
+
+            <!-- UNIFIED CAPTURE MODAL -->
+            <div id="capture-overlay" class="capture-overlay">
+                <div class="capture-modal">
+                    <div
+                        style="font-size:12px; font-weight:700; letter-spacing:3px; color:var(--pink); margin-bottom:25px;">
+                        DATA CAPTURED</div>
+
+                    <input type="text" id="subjectName" class="terminal-input" placeholder="ENTER SUBJECT NAME"
+                        maxlength="25" autocomplete="off">
+
+                    <button id="dlArtifact" class="secondary-btn"
+                        style="border-color:var(--pink); color:var(--pink); width:100%; margin-bottom:10px;">
+                        <span class="btn-label">1.</span> DOWNLOAD ARTIFACT (IMAGE)
+                    </button>
+                    <button id="dlLog" class="secondary-btn" style="width:100%; margin-bottom:10px;">
+                        <span class="btn-label">2.</span> DOWNLOAD DATA LOG
+                    </button>
+                    <a id="reqPrint" href="#" class="secondary-btn full-width locked-btn"
+                        style="opacity:0.3; width:100%; text-decoration:none; display:block; text-align:left; pointer-events:none;">
+                        <span class="btn-label">3.</span> COMMISSION INQUIRY (optional)
+                    </a>
+
+                    <div style="height:20px;"></div>
+                    <a href="https://digital.averylakeofficial.com/" class="secondary-btn" style="width:100%;">
+                        <span class="btn-label">4.</span> CONTINUE THE AUDIT
+                    </a>
+                    <div onclick="location.reload()"
+                        style="font-size:9px; color:rgba(255,255,255,0.4); cursor:pointer; letter-spacing:1px; margin-top:15px; text-decoration:underline;">
+                        RESET PROTOCOL</div>
+                </div>
+            </div>
+
+            <!-- UNIFIED EXTERNAL FOOTER FOR 04 -->
+            <div
+                style="position:fixed; bottom:0; left:0; width:100%; padding:20px; display:flex; justify-content:space-between; align-items:flex-end; pointer-events:none; z-index:100;">
+                <div style="display:flex; flex-direction:column; gap:6px; pointer-events:auto;">
+                    <span onclick="location.reload()"
+                        style="font-size:9px; color:rgba(255,255,255,0.4); cursor:pointer; letter-spacing:1px; transition:color 0.3s; text-transform:uppercase;">RESET
+                        PROTOCOL</span>
+                    <a href="https://www.averylakeofficial.com/" target="_blank"
+                        style="font-size:9px; color:rgba(255,255,255,0.4); text-decoration:none; text-transform:uppercase;">AN
+                        ART OF AVERY LAKE
+                        EXPERIMENT</a>
+                    <span style="font-size:7px; color:rgba(255,255,255,0.3);">© 2026 Avery Lake. All rights
+                        reserved.</span>
+                    <a href="https://averylakeofficial.com/the-signal" target="_blank"
+                        style="font-size:8px; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:1px; cursor: pointer; text-decoration: none;">Audio:
+                        Valuation by AVERY LAKE</a>
+                </div>
+                <a href="https://digital.averylakeofficial.com/"
+                    style="font-family: var(--font-ui); font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; border:1px solid rgba(255,255,255,0.2); background:transparent; color:rgba(255,255,255,0.6); padding:12px 20px; text-decoration:none; pointer-events:auto; transition: all 0.3s;">CONTINUE
+                    THE AUDIT</a>
+            </div>
+        </div>
+    </div> <!-- End Main Interface -->
+
+    <!-- ARTIFACT CANVAS (Hidden) -->
+    <canvas id="gen-artifact" style="display:none;"></canvas>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        // CONFIG
+        const CARDS = [
+            { id: "STAR", img: "star.jpg", prob: 0.70, lines: { l1: "2026 THE ART OF AVERY LAKE", l2: "THE STAR | GEM MINT ABUNDANCE", l3: "JJ EDITION", l4: "#001", l5: "GEM MT", l6: "10", l7: "AAL-JJ-ST-001-2026-ED1", l8: "001/003", l9: "THE STAR | GEM MINT ABUNDANCE" } },
+            { id: "WHEEL", img: "wheel.jpg", prob: 0.20, lines: { l1: "2026 THE ART OF AVERY LAKE", l2: "WHEEL OF FORTUNE | GEM MINT ABUNDANCE", l3: "JJ EDITION", l4: "#002", l5: "GEM MT", l6: "10", l7: "AAL-JJ-WF-002-2026-ED1", l8: "002/003", l9: "WHEEL OF FORTUNE | GEM MINT ABUNDANCE" } },
+            { id: "SUN", img: "sun.jpg", prob: 0.09, lines: { l1: "2026 THE ART OF AVERY LAKE", l2: "THE SUN | GEM MINT ABUNDANCE", l3: "JJ EDITION", l4: "#003", l5: "GEM MT", l6: "10", l7: "AAL-JJ-SU-003-2026-ED1", l8: "003/003", l9: "THE SUN | GEM MINT ABUNDANCE" } },
+            { id: "FOOL", img: "fool.jpg", prob: 0.01, lines: { l1: "2026 THE ART OF AVERY LAKE", l2: "THE FOOL | GEM MINT ABUNDANCE", l3: "JJ EDITION — SECRET RARE", l4: "#004", l5: "GEM MT", l6: "10", l7: "AAL-JJ-FO-SR-2026-ED1", l8: "004/003", l9: "THE FOOL | GEM MINT ABUNDANCE" } }
+        ];
+
+        let state = { result: null, hash: null, name: "ANONYMOUS", audioEnabled: false, dlArt: false, dlLog: false, loc: "UNKNOWN TERMINAL" };
+
+        const els = {
+            slab: document.getElementById('slab'),
+            spinBtn: document.getElementById('spinBtn'),
+            audio: document.getElementById('bgAudio'), audioToggle: document.getElementById('audioToggle'),
+            subjectName: document.getElementById('subjectName'),
+            dlArt: document.getElementById('dlArtifact'), dlLog: document.getElementById('dlLog'), reqPrint: document.getElementById('reqPrint'),
+            l1: document.getElementById('lbl-l1'), l2: document.getElementById('lbl-l2'), l3: document.getElementById('lbl-l3'), l4: document.getElementById('lbl-l4'),
+            l5: document.getElementById('lbl-l5'), l6: document.getElementById('lbl-l6'), l7: document.getElementById('lbl-l7'), resultImg: document.getElementById('resultImg'),
+            captureOverlay: document.getElementById('capture-overlay')
+        };
+
+        const isApp = navigator.userAgent.includes("Instagram") || navigator.userAgent.includes("FBAN");
+        if (isApp) document.getElementById('browserWarning').classList.remove('hidden');
+
+        fetch('https://get.geojs.io/v1/ip/geo.json')
+            .then(res => res.json()).then(data => { state.loc = `${data.city.toUpperCase()}, ${data.country_code}`; })
+            .catch(e => console.log("Geo fetch failed"));
+
+        // PHYSICS
+        document.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth / 2 - e.pageX) / 40;
+            const y = (window.innerHeight / 2 - e.pageY) / 40;
+            els.slab.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+        });
+        window.addEventListener('deviceorientation', (e) => {
+            if (e.gamma) els.slab.style.transform = `rotateY(${e.gamma / 3}deg) rotateX(${e.beta / 3}deg)`;
+        });
+
+        // INITIALIZE PROTOCOL
+        function initializeProtocol() {
+            document.getElementById('startOverlay').style.opacity = '0';
+            setTimeout(() => { document.getElementById('startOverlay').style.display = 'none'; }, 500);
+            document.getElementById('mainInterface').classList.add('active');
+
+            state.audioEnabled = true;
+            els.audio.play().then(() => {
+                els.audioToggle.textContent = "AUDIO: ON";
+                els.audioToggle.style.borderColor = 'var(--pink)';
+                els.audioToggle.style.color = 'var(--pink)';
+            }).catch(() => { });
+        }
+
+        els.audioToggle.addEventListener('click', () => {
+            state.audioEnabled = !state.audioEnabled;
+            if (state.audioEnabled) {
+                els.audio.play();
+                els.audioToggle.textContent = "AUDIO: ON";
+                els.audioToggle.style.borderColor = 'var(--pink)';
+                els.audioToggle.style.color = 'var(--pink)';
+            } else {
+                els.audio.pause();
+                els.audioToggle.textContent = "AUDIO: OFF";
+                els.audioToggle.style.borderColor = 'rgba(255,255,255,0.2)';
+                els.audioToggle.style.color = 'rgba(255,255,255,0.4)';
+            }
+        });
+
+        // SPIN
+        els.spinBtn.addEventListener('click', () => {
+            if (!state.audioEnabled) { state.audioEnabled = true; els.audio.play().catch(() => { }); els.audioToggle.innerText = "AUDIO: ON"; els.audioToggle.classList.add('active'); }
+            els.spinBtn.disabled = true; els.spinBtn.innerText = "AUDITING...";
+
+            const r = Math.random(); let sum = 0; state.result = CARDS[0];
+            for (let c of CARDS) { sum += c.prob; if (r <= sum) { state.result = c; break; } }
+
+            let cycles = 0;
+            const scramble = setInterval(() => {
+                els.l2.innerText = (cycles % 2 === 0) ? "CALCULATING..." : "AUDITING...";
+                els.l6.innerText = Math.floor(Math.random() * 10);
+                els.resultImg.style.opacity = (cycles % 4 === 0) ? 0.2 : 1;
+                cycles++;
+                if (cycles > 30) { clearInterval(scramble); lockResult(); }
+            }, 100);
+        });
+
+        function lockResult() {
+            const d = state.result.lines;
+            els.l1.innerText = d.l1; els.l2.innerText = d.l2; els.l3.innerText = d.l3;
+            els.l4.innerText = d.l4; els.l5.innerText = d.l5; els.l6.innerText = d.l6;
+            els.l6.style.fontSize = "1.6rem";
+            els.l7.innerText = d.l7;
+            els.resultImg.src = state.result.img;
+            els.resultImg.style.opacity = 1;
+            els.spinBtn.classList.add('hidden');
+
+            // Show result for 2.5 seconds before showing capture overlay
+            setTimeout(showIdentify, 2500);
+        }
+
+        function showIdentify() {
+            // Updated to Unified Modal
+            els.captureOverlay.style.display = 'flex';
+            // Wait for input and downloads
+        }
+
+        function checkUnlock() {
+            if (state.dlArt && state.dlLog) {
+                const btn = els.reqPrint;
+                btn.classList.remove('locked-btn');
+                btn.classList.add('unlocked-btn');
+                btn.innerHTML = "<span class='btn-label'>3.</span> COMMISSION INQUIRY →";
+                // Light Up with pink
+                btn.style.opacity = '1';
+                btn.style.borderColor = 'var(--pink)';
+                btn.style.color = 'var(--pink)';
+                btn.style.boxShadow = '0 0 20px rgba(255, 102, 178, 0.3)';
+                btn.style.pointerEvents = 'auto';
+                btn.style.cursor = 'pointer';
+
+                // Mark protocol as completed in localStorage
+                try {
+                    const progress = JSON.parse(localStorage.getItem('digitalAuditProgress') || '{}');
+                    progress.asset = { completed: true, timestamp: Date.now() };
+                    localStorage.setItem('digitalAuditProgress', JSON.stringify(progress));
+                } catch (e) { }
+            }
+        }
+
+        function updateMailto() {
+            const subject = `Commission Inquiry: ${state.result.lines.l2}`;
+            const body = `Dear Avery Lake,\n\nI have completed the Digital Audit Protocol 04.\n\nSUBJECT: ${state.name}\nHASH: ${state.hash}\nRESULT: ${state.result.lines.l2}\n\nI am attaching BOTH the Artifact Image and the Data Log to this email, as required to validate my audit.\n\nI would like to inquire about commissioning the physical, signed, and certified unique print of this asset.\n\nTECHNICAL SPECIFICATIONS:\n- Size: 18″ × 24″ (recommended). Other sizes available upon request.`;
+            els.reqPrint.href = `mailto:hello@averylakeofficial.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
+
+        // DOWNLOAD FIX: Canvas-based Monolith Artifact Generator
+        els.dlArt.addEventListener('click', async () => {
+            state.name = els.subjectName.value.toUpperCase() || "ANONYMOUS";
+            state.hash = state.hash || "0x" + Math.random().toString(16).substr(2, 9).toUpperCase();
+            updateMailto();
+
+            try {
+                // Capture the entire slab-face element exactly as displayed
+                const slabFace = document.querySelector('.slab-face');
+                const slabCanvas = await html2canvas(slabFace, {
+                    backgroundColor: null,
+                    scale: 3,
+                    useCORS: true,
+                    allowTaint: true
+                });
+
+                // Generate the monolith artifact
+                const c = document.getElementById('gen-artifact');
+                const cx = c.getContext('2d');
+                c.width = 2250; c.height = 3000;
+
+                // Base background
+                cx.fillStyle = "#080808";
+                cx.fillRect(0, 0, 2250, 3000);
+
+                // Textured background layers (pink theme - ENHANCED)
+                // Pink stripe 1 - NARROW BUT VISIBLE
+                const pinkGrad1 = cx.createLinearGradient(0, 0, 2250, 0);
+                pinkGrad1.addColorStop(0, "transparent");
+                pinkGrad1.addColorStop(0.39, "transparent");
+                pinkGrad1.addColorStop(0.40, "rgba(255, 102, 178, 0.8)");
+                pinkGrad1.addColorStop(0.42, "rgba(255, 102, 178, 0.8)");
+                pinkGrad1.addColorStop(0.43, "transparent");
+                pinkGrad1.addColorStop(1, "transparent");
+                cx.fillStyle = pinkGrad1;
+                cx.fillRect(0, 0, 2250, 3000);
+
+                // Pink stripe 2 - NARROW BUT VISIBLE
+                const pinkGrad2 = cx.createLinearGradient(0, 0, 2250, 0);
+                pinkGrad2.addColorStop(0, "transparent");
+                pinkGrad2.addColorStop(0.59, "transparent");
+                pinkGrad2.addColorStop(0.60, "rgba(255, 102, 178, 0.8)");
+                pinkGrad2.addColorStop(0.62, "rgba(255, 102, 178, 0.8)");
+                pinkGrad2.addColorStop(0.63, "transparent");
+                pinkGrad2.addColorStop(1, "transparent");
+                cx.fillStyle = pinkGrad2;
+                cx.fillRect(0, 0, 2250, 3000);
+
+                // Static noise stripes
+                const staticGrad = cx.createLinearGradient(0, 0, 2250, 0);
+                staticGrad.addColorStop(0, "transparent");
+                staticGrad.addColorStop(0.10, "transparent");
+                staticGrad.addColorStop(0.10, "rgba(255, 255, 255, 0.08)");
+                staticGrad.addColorStop(0.30, "rgba(255, 255, 255, 0.08)");
+                staticGrad.addColorStop(0.30, "transparent");
+                staticGrad.addColorStop(1, "transparent");
+                cx.fillStyle = staticGrad;
+                for (let y = 20; y < 3000; y += 70) {
+                    cx.fillRect(0, y, 2250, 70);
+                }
+
+                // Scanlines - HIGHLY VISIBLE
+                cx.fillStyle = "rgba(0, 0, 0, 0.3)";
+                for (let y = 0; y < 3000; y += 2) {
+                    cx.fillRect(0, y, 2250, 1);
+                }
+
+                // Vignette - SUBTLE
+                const vignette = cx.createRadialGradient(1125, 1500, 1500 * 0.25, 1125, 1500, 1500 * 0.95);
+                vignette.addColorStop(0, "transparent");
+                vignette.addColorStop(1, "rgba(0, 0, 0, 0.15)");
+                cx.fillStyle = vignette;
+                cx.fillRect(0, 0, 2250, 3000);
+
+                // Monolith frame dimensions (9:16 ratio)
+                const frameW = 1400; const frameH = 2488;
+                const frameX = (2250 - frameW) / 2; const frameY = 150;
+
+                // Fill monolith interior
+                cx.fillStyle = "#0a0a0a";
+                cx.fillRect(frameX, frameY, frameW, frameH);
+
+                // Calculate slab placement for 18x24 inch print
+                // Canvas is 2250x3000 px for 18x24" = 125 DPI
+                // Trading card: 3.5 x 2.5 inches = 437.5 x 312.5 px at 125 DPI
+                // Card is approximately 75% of slab height, so slab height = 437.5 / 0.75 = ~583 px
+                const slabAspect = slabCanvas.width / slabCanvas.height;
+
+                // Slab sized so trading card inside is actual size when printed at 18x24
+                const cardHeightPx = 437;  // 3.5 inches at 125 DPI
+                const slabH = cardHeightPx / 0.75;  // Card is ~75% of slab height
+                const slabW = slabH * slabAspect;
+
+                const slabX = frameX + (frameW - slabW) / 2;
+                const slabY = frameY + (frameH - slabH) / 2;
+
+                // Draw the captured slab
+                cx.drawImage(slabCanvas, slabX, slabY, slabW, slabH);
+
+                // Draw PINK monolith border (on top)
+                cx.strokeStyle = "#ff66b2";
+                cx.lineWidth = 6;
+                cx.strokeRect(frameX, frameY, frameW, frameH);
+
+                // Corner brackets - Pink + White alternating
+                const cornerSize = 60;
+                const cornerOffset = 45;
+                cx.lineWidth = 6;
+
+                // Top-left - PINK
+                cx.strokeStyle = "rgba(255, 102, 178, 0.9)";
+                cx.beginPath();
+                cx.moveTo(frameX - cornerOffset, frameY - cornerOffset + cornerSize);
+                cx.lineTo(frameX - cornerOffset, frameY - cornerOffset);
+                cx.lineTo(frameX - cornerOffset + cornerSize, frameY - cornerOffset);
+                cx.stroke();
+
+                // Top-right - WHITE
+                cx.strokeStyle = "rgba(255, 255, 255, 0.9)";
+                cx.beginPath();
+                cx.moveTo(frameX + frameW + cornerOffset - cornerSize, frameY - cornerOffset);
+                cx.lineTo(frameX + frameW + cornerOffset, frameY - cornerOffset);
+                cx.lineTo(frameX + frameW + cornerOffset, frameY - cornerOffset + cornerSize);
+                cx.stroke();
+
+                // Bottom-left - WHITE
+                cx.strokeStyle = "rgba(255, 255, 255, 0.9)";
+                cx.beginPath();
+                cx.moveTo(frameX - cornerOffset, frameY + frameH + cornerOffset - cornerSize);
+                cx.lineTo(frameX - cornerOffset, frameY + frameH + cornerOffset);
+                cx.lineTo(frameX - cornerOffset + cornerSize, frameY + frameH + cornerOffset);
+                cx.stroke();
+
+                // Bottom-right - PINK
+                cx.strokeStyle = "rgba(255, 102, 178, 0.9)";
+                cx.beginPath();
+                cx.moveTo(frameX + frameW + cornerOffset - cornerSize, frameY + frameH + cornerOffset);
+                cx.lineTo(frameX + frameW + cornerOffset, frameY + frameH + cornerOffset);
+                cx.lineTo(frameX + frameW + cornerOffset, frameY + frameH + cornerOffset - cornerSize);
+                cx.stroke();
+
+                // FOOTER
+                const footerY = 2850;
+                cx.font = "bold 36px 'Space Grotesk', Helvetica, Arial, sans-serif";
+                cx.fillStyle = "#ffffff";
+
+                cx.textAlign = "left";
+                cx.fillText(state.hash + " (1/1)", 150, footerY);
+                cx.textAlign = "center";
+                cx.fillText("THE ASSET", 1125, footerY);
+                cx.textAlign = "right";
+                cx.fillText("AVERY LAKE", 2100, footerY);
+
+                // Download the artifact
+                const link = document.createElement('a');
+                link.download = `THE_ASSET_ARTIFACT_${state.hash}.png`;
+                link.href = c.toDataURL("image/png");
+                link.click();
+
+                state.dlArt = true;
+                els.dlArt.classList.add('checked');
+                checkUnlock();
+            } catch (e) {
+                alert("Download Failed: " + e.message);
+            }
+        });
+
+        els.dlLog.addEventListener('click', () => {
+            const d = state;
+            state.name = els.subjectName.value.toUpperCase() || "ANONYMOUS";
+            state.hash = state.hash || "0x" + Math.random().toString(16).substr(2, 9).toUpperCase(); // Ensure hash is set if not already
+            updateMailto(); // Update mailto with new name and hash
+
+            const logContent = `═══════════════════════════════════════════
+        DIGITAL AUDIT // PROTOCOL 04
+═══════════════════════════════════════════
+
+SUBJECT ID............... ${d.name}
+TIMESTAMP................ ${new Date().toLocaleString()}
+LOCATION................. ${d.loc}
+UNIQUE HASH.............. ${d.hash}
+
+─────────────────────────────────────────────
+PROTOCOL SPECIFIC DATA:
+─────────────────────────────────────────────
+ASSET.................... ${d.result.lines.l2}
+GRADE.................... ${d.result.lines.l5} ${d.result.lines.l6}
+EDITION.................. ${d.result.lines.l8}
+
+─────────────────────────────────────────────
+PHILOSOPHICAL NOTE
+─────────────────────────────────────────────
+A value is a signal. Or is it an illusion?
+
+The logic of the marketplace, of the machine,
+wants to put a price on everything.
+
+But we choose different.
+You are priceless.
+
+─────────────────────────────────────────────
+ARTIFACT STATUS:       VERIFIED
+─────────────────────────────────────────────
+
+AUDIO: "Valuation" by AVERY LAKE
+© AVERY LAKE OFFICIAL // 2026
+THE DIGITAL AUDIT OF THE HUMAN CONDITION
+`;
+            const blob = new Blob([logContent], { type: 'text/plain' });
+            const link = document.createElement('a'); link.href = URL.createObjectURL(blob);
+            link.download = `THE_ASSET_DATA_LOG_${state.hash}.txt`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            state.dlLog = true; els.dlLog.classList.add('checked'); checkUnlock();
+        });
+
+        document.getElementById('restartBtn').addEventListener('click', () => window.location.reload());
+        document.getElementById('continueBtn').addEventListener('click', () => window.location.href = "https://www.averylakeofficial.com/digital");
+
+    </script>
+</body>
+
+</html>
